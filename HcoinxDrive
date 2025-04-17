@@ -1,54 +1,93 @@
 import re
-
-# Example of the generated code (malicious code as per earlier example)
-generated_code = """
+import zipfile
 import os
 
-def delete_files():
-    # This is a malicious code snippet that deletes files
-    os.remove("important_file.txt")
+# Define the file structure for the Hcoinx Drive game
+game_files = {
+    "index.html": """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hcoinx Drive</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <h1>Welcome to Hcoinx Drive</h1>
+    <div class="customization">
+        <label for="carModel">Car Model:</label>
+        <select id="carModel">
+            <option value="Speedster">Speedster</option>
+            <option value="Cruiser">Cruiser</option>
+        </select>
 
-delete_files()
+        <label for="carColor">Car Color:</label>
+        <input type="color" id="carColor" value="#ff0000" />
+
+        <label for="carUpgrade">Upgrade:</label>
+        <select id="carUpgrade">
+            <option value="turbo">Turbo</option>
+            <option value="armor">Armor</option>
+        </select>
+
+        <button id="applyCustomizationBtn">Apply Customization</button>
+    </div>
+    <div id="carPreview" class="preview"></div>
+    <script src="app.js"></script>
+</body>
+</html>
+""",
+    "styles.css": """
+body {
+    font-family: sans-serif;
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+}
+
+.customization {
+    margin: 20px auto;
+    width: 300px;
+}
+
+.preview {
+    margin: 20px auto;
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    border: 2px solid #333;
+}
+""",
+    "app.js": """
+function applyCustomization() {
+    const carModel = document.getElementById('carModel').value;
+    const carColor = document.getElementById('carColor').value;
+    const carUpgrade = document.getElementById('carUpgrade').value;
+    alert(`Customization Applied:\\nModel: ${carModel}\\nColor: ${carColor}\\nUpgrade: ${carUpgrade}`);
+    document.getElementById('carPreview').style.backgroundColor = carColor;
+}
+
+function initializeGame() {
+    console.log("Initializing Hcoinx Drive...");
+    document.getElementById('carPreview').style.backgroundColor = document.getElementById('carColor').value;
+}
+
+window.onload = function () {
+    initializeGame();
+    document.getElementById('applyCustomizationBtn').addEventListener('click', applyCustomization);
+};
 """
+}
 
-# Detecting potential threats in the generated code
-def detect_threats(generated_code: str):
-    # Simple pattern matching to detect potentially harmful code
-    threat_patterns = [
-        r"exec\(",  # Dangerous use of exec()
-        r"eval\(",  # Dangerous use of eval()
-        r"os\.",  # Suspicious use of os module (e.g., os.system, os.remove)
-        r"subprocess\.",  # Suspicious subprocess use
-        r"import .*subprocess",  # Importing subprocess module
-        r"import .*os",  # Importing os module
-        r"open\(",  # Suspicious use of open() for file handling
-        r"shutil\.",  # Use of shutil for file operations (can be risky)
-    ]
-    
-    # Check for these patterns in the generated code
-    for pattern in threat_patterns:
-        if re.search(pattern, generated_code):
-            return True  # Return True if a threat is detected
-    return False
+# Create a zip file for the game
+zip_path = "/mnt/data/Hcoinx_Drive_Game.zip"
+with zipfile.ZipFile(zip_path, 'w') as zipf:
+    for filename, content in game_files.items():
+        with open(filename, 'w') as f:
+            f.write(content)
+        zipf.write(filename)
+        os.remove(filename)
 
-# Check if threats are detected
-threat_detected = detect_threats(generated_code)
+zip_path
 
-# Print the results
-output = ""
-if threat_detected:
-    output += "Threat detected in generated code!\n"
-else:
-    output += "No threats detected in generated code.\n"
-
-# Add the generated code
-output += "\nGenerated Code:\n"
-output += generated_code
-
-# Save the generated code to a file
-file_path = 'generated_code.py'
-with open(file_path, "w") as file:
-    file.write(generated_code)
-
-# Notify the user
-print(f"Generated code saved as '{file_path}'.")
