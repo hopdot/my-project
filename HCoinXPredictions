@@ -1,0 +1,41 @@
+<div style="font-family:Arial;padding:20px;max-width:600px;margin:auto;">
+  <h2>NFL Game Predictor</h2>
+
+  <label>Team A Name: <input id="teamA" /></label><br />
+  <label>Offense Rating: <input id="offA" type="number" /></label><br />
+  <label>Defense Rating: <input id="defA" type="number" /></label><br />
+  <label>QB Rating: <input id="qbA" type="number" /></label><br /><br />
+
+  <label>Team B Name: <input id="teamB" /></label><br />
+  <label>Offense Rating: <input id="offB" type="number" /></label><br />
+  <label>Defense Rating: <input id="defB" type="number" /></label><br />
+  <label>QB Rating: <input id="qbB" type="number" /></label><br /><br />
+
+  <button onclick="predict()">Predict Winner</button>
+
+  <pre id="result" style="margin-top:20px;"></pre>
+
+  <script>
+    async function predict() {
+      const teamA = document.getElementById('teamA').value;
+      const offA = document.getElementById('offA').value;
+      const defA = document.getElementById('defA').value;
+      const qbA = document.getElementById('qbA').value;
+
+      const teamB = document.getElementById('teamB').value;
+      const offB = document.getElementById('offB').value;
+      const defB = document.getElementById('defB').value;
+      const qbB = document.getElementById('qbB').value;
+
+      const url = `https://<https://nflpredictor.onrender.com>/api/predict?teamA=${teamA}&offA=${offA}&defA=${defA}&qbA=${qbA}&teamB=${teamB}&offB=${offB}&defB=${defB}&qbB=${qbB}`;
+
+      const res = await fetch(url);
+      const data = await res.json();
+
+      document.getElementById('result').textContent = 
+        `Team A Score: ${data.teamA_score}
+Team B Score: ${data.teamB_score}
+Prediction: ${data.prediction}`;
+    }
+  </script>
+</div>
