@@ -1,0 +1,88 @@
+/* HCOINX Slots Styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(145deg, #1e1e1e, #2c2c2c);
+    color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* Slot Machine Container */
+#slot-machine {
+    max-width: 360px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #181818;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+/* Bitcoin Address Section */
+#bitcoin-address {
+    margin-bottom: 20px;
+}
+#bitcoin-address label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #ffc107;
+}
+#bitcoin-address input[type="text"] {
+    padding: 12px;
+    font-size: 1rem;
+    width: 90%;
+    border-radius: 8px;
+    border: 2px solid #ffc107;
+    background-color: #2e2e2e;
+    color: #fff;
+}
+
+/* Message Alert */
+#message {
+    color: #ff4d4d;
+    margin-top: 5px;
+}
+
+/* Reels Styling */
+.reels {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+.reel {
+    width: 80px;
+    height: 80px;
+    background-color: #262626;
+    border: 3px solid #ffc107;
+    border-radius: 10px;
+    font-size: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Spin Button */
+#spin-button {
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background-color: #ffc107;
+    color: #1e1e1e;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(255, 193, 7, 0.3);
+}
+#spin-button:hover {
+    background-color: #e0a800;
+}
+
+/* Spin Result */
+#result {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #0f0;
+}
