@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HCOINX (HCXX) Token</title>
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      text-align: center;
+      padding: 40px;
+    }
+    .container {
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 0 15px rgba(0,0,0,0.4);
+    }
+    h1 {
+      font-size: 2.2em;
+      color: #00ffc3;
+    }
+    p {
+      font-size: 1.1em;
+    }
+    #supply {
+      font-size: 1.3em;
+      font-weight: bold;
+      color: #ffd700;
+    }
+    footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #bbb;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>HCOINX (HCXX)</h1>
+    <p>Official ERC-20 Token powered by Web3 & Ethereum</p>
+    <p><strong>Total Supply:</strong> <span id="supply">Loading from blockchain...</span></p>
+    <p><strong>Deployed To:</strong><br/><code id="contractAddress">0xYourContractAddressHere</code></p>
+  </div>
+
+  <footer>
+    Owned by Howard Mosely – Contact: <a href="mailto:gmo.hc93@gmail.com" style="color:#ccc;">gmo.hc93@gmail.com</a>
+  </footer>
+
+  <script>
+    const contractAddress = "0xYourContractAddressHere"; // Replace with actual contract address
+    document.getElementById("contractAddress").innerText = contractAddress;
+
+    const abi = [
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "totalSupply",
+        "outputs": [{"name": "", "type": "uint256"}],
+        "type": "function"
+      }
+    ];
+
+    window.addEventListener('load', async () => {
+      if (window.ethereum) {
+        const web3 = new Web3(window.ethereum);
+        try {
+          await window.ethereum.request({ method: 'eth_requestAccounts' });
+          const contract = new web3.eth.Contract(abi, contractAddress);
+          const supply = await contract.methods.totalSupply().call();
+          document.getElementById("supply").innerText = web3.utils.fromWei(supply, 'ether') + " HCXX";
+        } catch (err) {
+          document.getElementById("supply").innerText = "Error fetching supply";
+        }
+      } else {
+        document.getElementById("supply").innerText = "MetaMask not installed";
+      }
+    });
+  </script>
+</body>
+</html>
